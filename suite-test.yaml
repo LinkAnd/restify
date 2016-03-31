@@ -1,0 +1,24 @@
+endpoint : "http://google.com"
+routes:
+  - route:
+    name: "test"
+    url: "/"
+    method: "get"
+    asserts:
+      - assert:
+        message: "should be 200 status code"
+        filter:
+          type: "equals"
+          property: "response.statusCode"
+          value: 200  
+  - route:
+    name: "test1"
+    url: "/"
+    method: "get"
+    asserts:
+      - assert:
+        message:  "should be 200 status code"
+        filter:
+          type:     "equals"
+          property: "response.statusCode"
+          value:    200

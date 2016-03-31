@@ -1,0 +1,44 @@
+endpoint: "http://rcs.dev.riskdata.com:10000"
+routes:
+  - route:
+    name:    "info"
+    url:     "/api/v1/info"
+    method:  "get"
+    asserts:
+      - assert:
+        message : "It should be 200 from status code"
+        filter:
+          type: "equals"
+          property: "response.statusCode"
+          value:    200
+  - route:
+    name: "instrumentation"
+    url : "/api/v1/Instrumentation/counters"
+    method: "get"
+    asserts:
+      - assert:
+        message: "It should be 200 from status code"
+        filter:
+          type : "equals"
+          property: "response.statusCode"
+          value: 200
+      - assert:
+        message: "it should be  'Process|Thread Count' more than 0 "
+        filter:
+          type: "moreThan"
+          property: "response.body['Process|Thread Count']"
+          value: 0
+  - route:
+    name: "get counter"
+    url: "/api/v1/Instrumentation/counters/counter"
+    injectData: "url"
+    data:
+      name: "Process%7CPage%20File%20Bytes"
+    method: "get"
+    asserts:
+      - assert:
+        message: "It should be 200 from status code"
+        filter:
+          type: "equals"
+          property: "response.statusCode"
+          value: 200
